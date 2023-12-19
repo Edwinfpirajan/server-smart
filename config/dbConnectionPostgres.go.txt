@@ -36,7 +36,6 @@ func NewPostgresConnection() *gorm.DB {
 	})
 	return connection
 }
-
 // MainDbConnection is the function that connects to the database
 func MainDbConnection() {
 	loadEnv()

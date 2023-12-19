@@ -26,7 +26,7 @@ type MainDb struct {
 	Port     int    `mapstructure:"port" validate:"required"`
 	User     string `mapstructure:"user" validate:"required"`
 	Password string `mapstructure:"password" validate:"required"`
-	DbName   string `mapstructure:"db_name" validate:"required"`
+	DbName   string `mapstructure:"name" validate:"required"`
 }
 
 func Environments() Config {

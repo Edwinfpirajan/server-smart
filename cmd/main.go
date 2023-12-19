@@ -1,8 +1,11 @@
 package main
 
-import "github.com/Edwinfpirajan/server-smart.git/config"
+import (
+	"github.com/Edwinfpirajan/server-smart.git/config"
+	"github.com/Edwinfpirajan/server-smart.git/internal/src"
+)
 
 func main() {
-	// config.MainDbConnection()
+	src.MainDbConnection()
 	config.Environments()
 }

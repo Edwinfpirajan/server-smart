@@ -1,10 +1,10 @@
-package config
+package src
 
 import (
 	"fmt"
-	"os"
 	"sync"
 
+	"github.com/Edwinfpirajan/server-smart.git/config"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -32,13 +32,14 @@ func (p *pgOptions) buildDSN() string {
 
 func NewPostgresConnection() *gorm.DB {
 	once.Do(func() {
-		connection = getConnection()
+		connection = MainDbConnection()
 	})
 	return connection
 }
+
 // MainDbConnection is the function that connects to the database
-func MainDbConnection() {
-	loadEnv()
+func MainDbConnection() *gorm.DB {
+	config.Environments()
 
 	dsn := environmentDSN()
 
@@ -53,19 +54,19 @@ func MainDbConnection() {
 		panic(err)
 	}
 
-	DB = db
-
 	fmt.Println("Successful connection to the main database")
+
+	return db
 }
 
 // environmentDSN builds the Data Source Name (DSN) string from environment variables
 func environmentDSN() string {
 	options := pgOptions{
-		Host:     os.Getenv("MAIN_DB_HOST"),
-		User:     os.Getenv("MAIN_DB_USER"),
-		Password: os.Getenv("MAIN_DB_PASSWORD"),
-		Dbname:   os.Getenv("MAIN_DB_NAME"),
-		Port:     os.Getenv("MAIN_DB_PORT"),
+		Host:     config.Cfg.MainDb.Host,
+		User:     config.Cfg.MainDb.User,
+		Password: config.Cfg.MainDb.Password,
+		Dbname:   config.Cfg.MainDb.DbName,
+		Port:     fmt.Sprintf("%d", config.Cfg.MainDb.Port),
 	}
 
 	return options.buildDSN()

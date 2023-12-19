@@ -31,7 +31,7 @@ type MainDb struct {
 
 func Environments() Config {
 	Once.Do(func() {
-		if err := config.SetEnvsFromFile(".env"); err != nil {
+		if err := config.SetEnvsFromFile("server", ".env"); err != nil {
 			log.Panicf("Error can't loaded .env file %#v", err)
 		}
 		if err := config.GetConfigFromEnv(&Cfg); err != nil {
